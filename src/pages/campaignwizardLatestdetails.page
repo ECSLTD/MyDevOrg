@@ -1,0 +1,14 @@
+<apex:page controller="clsCampaignWizardController" tabStyle="Question__c" >
+<apex:sectionHeader title="New Campaign"  subtitle="Step 3 of 3"/> 
+
+<apex:form > 
+<apex:pageBlock >
+ <apex:pageBlockButtons >
+     <apex:commandButton action="{!step3}" value="  Previous  " styleClass="btn"   /> 
+ </apex:pageBlockButtons>
+</apex:pageBlock>
+
+ </apex:form> 
+
+
+</apex:page>

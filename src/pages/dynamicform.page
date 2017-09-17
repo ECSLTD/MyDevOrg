@@ -1,0 +1,18 @@
+<apex:page standardController="Test_Campaign__c" extensions="extTestCampaign"   >
+ <apex:form >
+  <apex:pageBlock >
+  <apex:pageBlockTable value="{!Questions}" var="c" id="table">
+  
+  <apex:column >
+       <apex:selectRadio value="{!c.qName}" >
+            <apex:selectOptions value="{!c.options}"/>
+       </apex:selectRadio>
+  </apex:column>
+  </apex:pageBlockTable>
+  
+  </apex:pageBlock> 
+  <apex:repeat value="{!Questions}" id="Question" var="q">  
+   <c:DynamicQuestionComp Question="{!q.qName}" answers="{!q.options}" type="{!q.qType}"  />
+  </apex:repeat>
+ </apex:form>
+</apex:page>

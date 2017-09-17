@@ -1,0 +1,23 @@
+<apex:page controller="CustomMerchandiseFilter" tabStyle="Merchandise__c">
+   <apex:form >
+   <apex:pageblock >
+         <apex:actionRegion >
+
+  <p>Below the Price:  <apex:inputText id="filter" value="{!myFilter}"  >
+                      <apex:actionSupport event="onchange"  rerender="filter1,MerchandiseList"/>
+                                      </apex:inputText></p>
+                                       
+     </apex:actionRegion>
+   <p></p>
+   <p>List of Merchandises lessthan the price : 
+    <apex:outputText id="filter1" value="{!IF(myFilter==1.00,0.00,myFilter)}"  /> </p>
+   
+         <apex:pageBlockTable value="{!Merchandises}" var="a" columns="4" id="MerchandiseList"   >
+      <apex:column value="{!a.name}" width="20%"/>
+        <apex:column value="{!a.Price__c}" width="20%" />
+        <apex:column width="60%" />
+    </apex:pageBlockTable>
+
+    </apex:pageblock>
+   </apex:form>
+</apex:page>

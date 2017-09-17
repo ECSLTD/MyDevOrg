@@ -1,0 +1,28 @@
+<apex:page showHeader="false" id="SiteTemplate">
+  <apex:stylesheet value="{!URLFOR($Resource.SiteSamples, 'SiteStyles.css')}"/>
+  <apex:insert name="header">
+    <c:SiteHeader />
+    <hr/>
+  </apex:insert>
+   <apex:panelGrid cellpadding="0" cellspacing="0" width="98%" border="0" columns="3"  style="text-align: left;width:1300px;" id="theMasterBody">
+   <apex:outputPanel style="width:150px;">
+    <apex:insert name="LeftColumn" >
+     <apex:outputText value=" Left Column Space " style="text-left: left;" />    
+    </apex:insert>
+    </apex:outputPanel>
+    <apex:outputPanel style="width:800px;text-left: left;">
+   <apex:insert name="body"/>
+   </apex:outputPanel>
+    <apex:outputPanel style="width:150px;">
+    <apex:insert name="RightColumn">
+     <apex:outputText value=" Right Column Space " style="text-align: left;" />
+    </apex:insert>
+    </apex:outputPanel>
+  </apex:panelGrid>
+ 
+  <apex:insert name="footer">
+    <hr/>
+    <c:SiteFooter />
+    <site:googleAnalyticsTracking />
+  </apex:insert>
+</apex:page>

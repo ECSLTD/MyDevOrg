@@ -1,0 +1,13 @@
+<apex:component >
+
+<apex:attribute name="header" description="To create a quote" type="string" required="true"/>  
+<apex:attribute name="headerimage" description="image" type="string" required="true"/>
+<apex:attribute name="headerimage" description="image" type="string" required="true"/>
+  <apex:form >
+   <div id="group1" onmouseover="HilightGroupBox('group1');" onmouseout="HouverOutGroupBox('group1');" >
+   <a href=""></a>
+    <apex:outputLabel styleClass="heading" value="{!header}"/>    
+    <div class="innerbox" > Campaign Code not selected!</div>
+   </div>
+</apex:form>
+</apex:component>

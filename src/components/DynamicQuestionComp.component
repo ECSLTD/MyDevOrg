@@ -1,0 +1,15 @@
+<apex:component id="DynamicQuestionComp" >
+
+<apex:attribute id="Question" name="Question"  required="true" type="String" description="Question"   />
+<apex:attribute id="Answers" name="Answers"  required="true" type="SelectOption" description="Answers"   />
+<apex:attribute id="type" name="type"  required="true" type="string" description="Type"   />
+              <apex:selectList id="multiSingle" value="{!Question}" multiselect="true" rendered="{!IF(type ='Multi select',true,false)}">
+                <apex:selectOptions value="{!Answers}"/>
+              </apex:selectList>
+                 <apex:selectRadio id="single" value="{!Question}" rendered="{!IF(type ='Single select',true,false)}">
+                <apex:selectOptions value="{!Answers}"/>
+              </apex:selectRadio>
+              <apex:outputText value="{!Question}" rendered="{!IF(type ='Text',true,false)}" >
+                 <apex:inputText id="text"     />
+               </apex:outputText>
+</apex:component>

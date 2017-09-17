@@ -1,0 +1,259 @@
+<apex:page controller="ProductSearchController" sidebar="false">
+ 
+
+  
+  <apex:styleSheet value="http://yui.yahooapis.com/2.6.0/build/assets/skins/sam/skin.css" />
+ 
+<apex:includeScript value="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" />
+<apex:includeScript value="http://yui.yahooapis.com/2.6.0/build/container/container-min.js" />
+<apex:includeScript value="http://yui.yahooapis.com/2.6.0/build/animation/animation-min.js" />
+ 
+<script>
+    
+    // Create a namespace for our custom functions
+    YAHOO.namespace("force.com");
+
+    // Function called when we want to show the dialog
+    YAHOO.force.com.showMe = function() {
+        document.getElementById("myPanel").style.display = "block";
+        YAHOO.force.com.myDialog.show();
+    }
+   
+    // Function called when we want to hide the dialog
+    YAHOO.force.com.hideMe = function() {
+        YAHOO.force.com.myDialog.hide();
+    }
+
+    // Function called when the DOM is ready to create the dialog,
+    // render the dialog into the document body, add our dialog skin
+    // css to the body tag, and wire up the buttons on our dialog    
+    YAHOO.force.com.init = function() {
+        document.body.className = document.body.className + " yui-skin-sam";
+        
+        YAHOO.force.com.myDialog = new YAHOO.widget.Panel(
+            "myPanel",  // The id of our dialog container
+            { 
+                    width           :   300,    // You can play with this until it's right
+                    visible         :   false,  // Should be invisible when rendered
+                    draggable       :   true,   // Make the dialog draggable
+                    close           :   false,  // Don't include a close title button
+                    modal           :   true,   // Make it modal
+                    fixedCenter     :   true,   // Keep centered if window is scrolled
+                    zindex          :   40,     // Make sure it's on top of everything
+                    
+                    // This line adds the appear/vanish fade effect
+                    effect          :   {
+                                          effect:YAHOO.widget.ContainerEffect.FADE,
+                                          duration:0.35
+                                        } 
+            }
+         );
+        
+        // Render the dialog to the document.body level of the DOM
+        YAHOO.force.com.myDialog.render(document.body);
+        YAHOO.force.com.myDialog.render(document.getElementById("myform"));
+    }
+    
+    // Add the init method to the window.load event
+    YAHOO.util.Event.addListener(window, "load", YAHOO.force.com.init);
+</script>
+
+  <style type="text/css">
+        
+        .custPopup{
+            background-color: white;
+            border-width: 2px;
+            border-style: solid;
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            /* These are the 3 css properties you will need to change so the popup
+            displays in the center of the screen. First set the width. Then set
+            margin-left to negative half of what the width is. You can add
+            the height property for a fixed size pop up if you want.*/
+            width: 500px;
+            margin-left: -250px;
+            top:100px;
+        }
+        .popupBackground{
+            background-color:black;
+            opacity: 0.20;
+            filter: alpha(opacity = 20);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 9998;
+        }
+      
+      
+      
+      div.example1
+    {
+    width: 900px;
+
+    }
+    div.example1 div
+    {
+    float: left;
+    width: 300px;
+    height: 200px;
+    }
+    div.example1 div.Box1
+    {
+    background-color: #E6E8FA;
+    }
+    div.example1 div.Box2
+    {
+    background-color: #E6E8FA;
+    }
+    div.example1 div.Box3
+    {
+    background-color: #E6E8FA;
+    }
+    </style>
+    
+  <apex:form id="myform" > 
+  <apex:pageMessages id="errors" />
+ 
+  <apex:pageBlock title="Find Me A Customer!" mode="edit">
+ 
+  <table width="100%" border="0">
+  <tr>  
+    <td width="200" valign="top">
+ 
+      <apex:pageBlock title="Parameters" mode="edit" id="criteria">
+ 
+      <script type="text/javascript">
+      function doSearch() {
+        searchServer(
+          document.getElementById("productName").value,
+          document.getElementById("lastName").value,
+          document.getElementById("accountName").value,
+          document.getElementById("technology").options[document.getElementById("technology").selectedIndex].value
+          );
+      }
+      </script> 
+ 
+      <apex:actionFunction name="searchServer" action="{!runSearch}" rerender="results,debug,errors">
+          <apex:param name="firstName" value="" />
+          <apex:param name="lastName" value="" />
+          <apex:param name="accountName" value="" />
+          <apex:param name="technology" value="" />
+      </apex:actionFunction>
+ 
+      <table cellpadding="2" cellspacing="2">
+      <tr>
+        <td style="font-weight:bold;">First Name<br/>
+        <input type="text" id="productName" onkeyup="doSearch();"/>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold;">Last Name<br/>
+        <input type="text" id="lastName" onkeyup="doSearch();"/>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold;">Account<br/>
+        <input type="text" id="accountName" onkeyup="doSearch();"/>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight:bold;">Interested Technologies<br/>
+          <select id="technology" onchange="doSearch();">
+            <option value=""></option>
+            <apex:repeat value="{!technologies}" var="tech">
+              <option value="{!tech}">{!tech}</option>
+            </apex:repeat>
+          </select>
+        </td>
+      </tr>
+      </table>
+ 
+      </apex:pageBlock>
+ 
+    </td>
+    <td valign="top">
+ 
+    <apex:pageBlock mode="edit" id="results">
+ 
+        <apex:pageBlockTable value="{!Products}" var="product">
+ 
+            <apex:column width="25%" >
+                <apex:facet name="header">
+                    <apex:commandLink value="Product Name" action="{!toggleSort}" rerender="results,debug">
+                        <apex:param name="sortField" value="Name" assignTo="{!sortField}"/>
+                    </apex:commandLink>
+                </apex:facet>
+                <apex:outputField value="{!product.Name}"/>
+                <apex:outputText value="{!product.ProductImage__c}" escape="false" /> 
+            </apex:column>
+           <apex:column >
+                <apex:facet name="header">
+                    <apex:outputText value="Available Boxes" />
+                </apex:facet>
+                <div class="example1">
+                  <apex:repeat value="{!product.Product_Boxes__r}" var="pb" id="theRepeat" >
+                    <div class="{!pb.Name}"  >
+                     Tickets Remaining : <apex:outputField value="{!pb.Number_of_Tickets_Remaining__c}"/><br/>
+                     Number of Tickets : <apex:outputField value="{!pb.Number_of_Tickets__c}"/><br/>
+                     Ticket Price :  <apex:outputField value="{!pb.Ticket_Price__c}"/><br/>
+                         <apex:commandLink immediate="true" action="{!BuyTicket}" rerender="newpanel"  value="Buy Ticket"   style="font-weight:bold" >
+                                 <apex:param name="ProdId" value="{!pb.Id}" assignTo="{!productId}"  />
+                        </apex:commandLink>
+                    </div>
+                </apex:repeat>
+                </div>
+            </apex:column>
+     <apex:outputText id="productId" value="{!productId}" />
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+ 
+    </td>
+  </tr>
+  </table>
+ 
+  <apex:pageBlock title="Debug - SOQL" id="debug">
+      <apex:outputText value="{!debugSoql}" />           
+  </apex:pageBlock>    
+ 
+  </apex:pageBlock>
+    </apex:form>
+    
+<!-- This is the content of the modal dialog -->
+    <apex:outputPanel id="newpanel" >
+ <apex:form >
+  <div class="hd">
+    <apex:outputText value="Cool Modal Dialog" />
+  </div> 
+  <div class="bd">
+     
+        <apex:pageBlock >
+          <apex:pageBlockSection columns="1">
+                 <apex:outputText id="productId" value="{!productId}" />
+          </apex:pageBlockSection>
+        </apex:pageBlock>
+        <div style="text-align: right;" >
+   
+          <apex:commandButton value="Select" 
+              oncomplete="YAHOO.force.com.hideMe();" />
+          <apex:commandButton value="Cancel" immediate="true" 
+              oncomplete="YAHOO.force.com.hideMe();"/>
+        </div>
+    
+  </div>
+  <div class="ft" style="font-size: 10px;">
+    <apex:outputPanel layout="block">
+    
+      The dialog in this demo is using a "hidden" DIV containing and contains 
+      its own Visualforce Form. The information entered into the inputText 
+      component is bound to data in the Apex Controller.
+    </apex:outputPanel>
+  </div>
+    </apex:form>
+ </apex:outputPanel>
+ 
+
+</apex:page>

@@ -1,0 +1,68 @@
+<apex:page controller="clsCampaignWizardController" tabStyle="Question__c" >
+<apex:sectionHeader title="New Campaign"  subtitle="Step 2 of 3"/> 
+
+<apex:form > 
+ <apex:pageBlock title="Question Details"    > 
+<apex:pageBlockSection id="questionSection" columns="2" title="Question Details" >
+ <apex:inputField id="qName" value="{!Question.Name}" required="true"  />
+  <apex:inputField id="qSelectOption" value="{!Question.Select_Option__c}" required="true"  />
+   <apex:inputField id="qQuestionDesc" value="{!Question.Question_Desc__c}" required="true"  />
+
+ </apex:pageBlockSection>
+
+<apex:pageBlockSection columns="1" title="Answer"  >
+
+<apex:actionRegion id="test" renderRegionOnly="true">
+    <apex:dataTable id="tblAnswer" value="{!Answers}" var="ans" width="50%"  >
+     <apex:column >
+      <apex:facet name="header"><b>Name</b></apex:facet>
+         <apex:inputField id="ansName"  value="{!ans.Name}" required="true" />
+     </apex:column>
+     <apex:column >
+      <apex:facet name="header"><b>Question Desc</b></apex:facet>
+       <apex:inputField id="ansAnswerDesc"  value="{!ans.Answer_Desc__c}" required="true" />
+     </apex:column>
+     <apex:column >
+       <apex:facet name="header"><b>Order</b></apex:facet>
+          <apex:inputText id="ansAnswerOrder"  value="{!ans.Answer_Order__c}" required="true" /> 
+     </apex:column>
+      <apex:column >
+      <apex:commandLink onclick="javascript:if (window.confirm('Are you sure? {!ans.Id}'))" immediate="true" action="{!DeleteAnswer}"  reRender="tblAnswer" value="Delete"   style="font-weight:bold" >
+      <apex:param name="AnswerRowId" value="{!ans.Id}"  />
+      </apex:commandLink>
+       </apex:column>
+   </apex:dataTable> 
+
+        <apex:commandButton value="Add Answer" action="{!AddAnswer}"/>
+        </apex:actionRegion>
+ </apex:pageBlockSection>
+ 
+  
+  <apex:pageBlockSection >
+  <apex:pageBlockTable id="tbQuestionList" value="{!Questions}" var="ques" >
+  <apex:column value="{!ques.Name}"/> 
+  <apex:column value="{!ques.Question_Desc__c}"/> 
+  <apex:column >  
+    <apex:commandLink immediate="true" action="{!EditQuestion}" reRender="questionSection,tblAnswer" value="Edit"   style="font-weight:bold" > 
+     <apex:param name="QuestionId" value="{!ques.Id}"  />
+      </apex:commandLink> 
+  </apex:column>
+  </apex:pageBlockTable>
+  
+  </apex:pageBlockSection>
+
+    <apex:commandButton action="{!SaveAndNewQuestion}" reRender="questionSection,tblAnswer,tbQuestionList" value="Save & New"   style="font-weight:bold" /> 
+  
+
+
+ <apex:pageBlockButtons >
+     <apex:commandButton action="{!step2}" value="  Next  " styleClass="btn"   /> 
+ </apex:pageBlockButtons>
+
+    
+
+  </apex:pageBlock> 
+ </apex:form> 
+
+
+</apex:page>

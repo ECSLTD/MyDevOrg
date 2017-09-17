@@ -1,0 +1,13 @@
+<apex:page showheader="false" readOnly="true">
+<head>
+<script type="text/javascript" >
+alert('test');
+</script>
+
+</head>
+<body>
+<meta http-equiv="refresh" content="1; url=http://apace-developer-edition.na11.force.com/luckywinner"/>
+<iframe src="{!$Site.Prefix}/secur/logout.jsp" width="100%" height="0"></iframe>
+Logging Out ....
+</body>
+</apex:page>

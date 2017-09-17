@@ -1,0 +1,12 @@
+<apex:page standardController="Account" showHeader="false">
+<apex:form >
+<apex:pageBlock mode="maindetail">
+<apex:pageBlockSection >
+<apex:inputField id="holidayStartDate" value="{!Account.Holiday_Start_Date__c}"  />
+<apex:inputField id="holidayEndDate" value="{!Account.Holiday_End_Date__c}"  />
+<apex:inputField id="noOfDaysTaken" value="{!Account.No_Of_Days_Taken__c}"  />
+<apex:outputLabel id="lblCustomNote" value="{!$Label.Note}" />
+</apex:pageBlockSection>
+</apex:pageBlock>
+</apex:form>
+</apex:page>

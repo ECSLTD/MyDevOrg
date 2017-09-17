@@ -1,0 +1,106 @@
+<apex:page standardController="opportunity">
+<style>
+ .box{
+  border: 2px solid #ccc;
+  height: 110px;
+  margin: 25px;
+  padding: 10px;
+  width: 200px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  } 
+   
+  .innerbox{
+  border: 2px solid #ccc;
+  height: 65px;
+  margin: 5px;
+  padding: 10px;
+  width: 170px;
+  }
+  
+  .heading{
+  font-weight:bold;
+  }
+  .hovergroup{
+    background-color:#00ff00;
+  }
+  </style>
+
+
+<script  language="javascript" type="text/javascript" >
+
+    function HilightGroupBox(divid){
+        var d = document.getElementById(divid).className='hovergroup';
+}
+ function HouverOutGroupBox(divid){
+        var d = document.getElementById(divid).className ='';
+}
+
+</script>
+
+
+
+  <apex:form >
+  
+ <apex:panelGrid columns="4" id="topTable" width="100%" border="0">
+                   <apex:panelGroup styleClass="box" layout="block" >
+                   <div id="group1" onmouseover="HilightGroupBox('group1');" onmouseout="HouverOutGroupBox('group1');" >
+                   <apex:outputLabel styleClass="heading" value="Create Quote(s)"/><div class="innerbox" > Campaign Code not selected!<br/><p><a href="https://c.cs3.visual.force.com/apex/OpportunityDetails"><font color="grey"><u>Create a new Quote</u></font></a></p></div>
+                   </div>
+                   
+                   </apex:panelGroup>
+                    
+                    <apex:panelGroup styleClass="box" layout="block">
+                     <div id="group2" onmouseover="HilightGroupBox('group2');" onmouseout="HouverOutGroupBox('group2');" >
+                     <apex:outputLabel styleClass="heading" value="Select Device(s) for Quote(s)"/><div class="innerbox"> <a href="https://c.cs3.visual.force.com/apex/OpportunityDetails"><font color="blue"><u>3 locations</u></font></a> selected for this opportunity <p><a href="https://c.cs3.visual.force.com/apex/OpportunityDetails"><font color="blue"><u>Relate Quote to devices for these locations</u></font></a></p> </div>
+                     </div>
+                     </apex:panelGroup>
+                    <apex:panelGroup styleClass="box" layout="block">
+                                         <div id="group3" onmouseover="HilightGroupBox('group3');" onmouseout="HouverOutGroupBox('group3');" >
+                    <apex:outputLabel styleClass="heading" value="Preview/Send Agreement"/><div class="innerbox"> <a href="https://c.cs3.visual.force.com/apex/OpportunityDetails"><font color="blue"><u>Preview Quote</u></font></a><br/><a href="https://c.cs3.visual.force.com/apex/OpportunityDetails"><font color="blue"><u>Send Agreement</u></font><font color="grey"><u><p>not all devices are assigned a quote</p></u></font></a></div>
+                    </div>
+                    </apex:panelGroup>
+                    <apex:panelGroup styleClass="box" layout="block">
+                                         <div id="group4" onmouseover="HilightGroupBox('group4');" onmouseout="HouverOutGroupBox('group4');" >
+                    <apex:outputLabel styleClass="heading" value="Convert to Order"/><div class="innerbox"> 2 orders exist. There are 3 quotes that are pending conversion! <p><a href="https://c.cs3.visual.force.com/apex/OpportunityDetails"><font color="blue"><u> Open Order Conversion Page </u></font></a></p></div>
+                                        </div>
+                    </apex:panelGroup>
+            </apex:panelGrid>
+                    
+
+  
+  
+  
+                  <div style="width:40%;display:block;padding-left:180px;">
+                  
+                <apex:commandButton value="Show By Quote"  style="float:left;"  />
+                <apex:commandButton value="Show By PL"  style="float:left;"/>
+                  <apex:commandButton value="Save" action="{!save}" style="float:right;"  />
+                <apex:commandButton value="Edit" action="{!cancel}" style="float:right;"/>
+                </div>
+   <apex:pageblock >
+           
+         <apex:pageBlockTable value="{!opportunity}" var="opp"  columns="4" id="LocationTable"   >
+           <apex:column >
+                <apex:facet name="header">Location</apex:facet>
+                  {!opp.Name}
+            </apex:column>
+           <apex:column >
+                <apex:facet name="header">Device</apex:facet>
+                  <apex:inputField value="{!opp.StageName}"/>
+            </apex:column>
+                <apex:column >
+                <apex:facet name="header">OrderType</apex:facet>
+                  {!opp.Name}
+            </apex:column>
+                 <apex:column >
+                <apex:facet name="header">UpgradeSection</apex:facet>
+                    <apex:outputLabel value="UpgradeType"/>
+                    <apex:inputField value="{!opp.StageName}"/>
+            </apex:column>
+    </apex:pageBlockTable>
+
+    </apex:pageblock>
+   </apex:form>
+
+</apex:page>

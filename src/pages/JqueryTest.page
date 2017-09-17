@@ -1,0 +1,38 @@
+<apex:page controller="CustomAccount" >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Jquery Test Page
+  <!-- End Default Content REMOVE THIS -->
+    <apex:includeScript value="{!URLFOR($Resource.jquery, 'js/jquery-1.6.2.min.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jquery, 'js/jquery-ui-1.8.16.custom.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jquery, 'css/ui-lightness/jquery-ui-1.8.16.custom.css')}"/>
+          
+     <apex:form id="JqueryForm" >
+       <script type="text/javascript">
+         var j$ = jQuery.noConflict();
+ 
+        j$(document).ready(function(){
+
+             j$("[id$='Find']").click(function(event) {
+                alert("hi ya STAR TO FACE!!!!!");
+            });
+        });
+     </script> 
+    Filter <apex:inputtext id="filterName"  value="{!myFilter}" />
+
+     <apex:pageBlock >
+       <apex:pageBlockTable value="{!Accounts}" var="a" id="filteredAccounts">
+     <apex:column value="{!a.Id}" width="20%">
+     <apex:facet name="Account Id" > 
+     </apex:facet></apex:column>
+    <apex:column value="{!a.name}" width="20%">
+     <apex:facet name="Account Name" > 
+     </apex:facet></apex:column>
+       <apex:column width="60%" />
+     </apex:pageBlockTable>
+   
+     </apex:pageBlock>
+
+
+    </apex:form>
+</apex:page>

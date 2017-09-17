@@ -1,0 +1,8 @@
+<apex:page showHeader="false" standardStylesheets="true">
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<!-- Page's Content go here -->
+  sample website using customerportal login
+</apex:define>
+</apex:composition>
+</apex:page>

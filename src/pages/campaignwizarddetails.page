@@ -1,0 +1,22 @@
+<apex:page controller="clsCampaignWizardController" tabStyle="Test_Campaign__c" >
+<apex:sectionHeader title="New Campaign"  subtitle="Step 1 of 3"/> 
+
+<apex:form > 
+ <apex:pageBlock title="New Campaign" > 
+   <apex:pageBlockButtons >
+     <apex:commandButton action="{!step1}" value="  Next  " styleClass="btn"   /> 
+ </apex:pageBlockButtons>
+ <apex:pageBlockSection columns="2" title="Campaign Details" >
+
+   <apex:inputField id="cName" value="{!TestCampaign.Name}" required="true"  />
+   <apex:inputField id="cStartDate" value="{!TestCampaign.Campaign_Start_Date__c}"   />
+   <apex:inputField id="cXcode" value="{!TestCampaign.X_code__c}"   />
+   <apex:inputField id="cEndDate" value="{!TestCampaign.Campaign_End_Date__c}"   />
+ </apex:pageBlockSection>
+
+
+  </apex:pageBlock> 
+ </apex:form> 
+
+
+</apex:page>

@@ -1,0 +1,15 @@
+<apex:page controller="clsMyAccountController" action="{!MyAccount}" showHeader="false" standardStylesheets="true">
+<apex:composition template="{!$Site.Template}">
+<apex:define name="body">
+<!-- Page's Content go here -->
+  sample website My Account
+  <apex:form id="theAccountForm" forceSSL="true">
+   <apex:repeat value="{!UserDetails}" var="ud">
+       <apex:inputField id="lastName"  value="{!ud.lastname}" required="true" />
+       <apex:inputField id="email"  value="{!ud.email}" required="true" />
+   </apex:repeat>
+  </apex:form>
+  
+</apex:define>
+</apex:composition>
+</apex:page>
